@@ -22,7 +22,9 @@ class WindowButton : public Button {
 private:
 public:
     // Constructor
-    WindowButton(){} // this is default constructor
+    WindowButton(){
+        cout << "Window button is created." << endl;
+    } // this is default constructor
 
     // Override function
     void render() override {
@@ -33,13 +35,17 @@ public:
     }
 
     // Destructor
-    ~WindowButton() {}
+    ~WindowButton() {
+        cout << "Window buuton is destructed." << endl;
+    }
 };
 
 class MacButton : public Button {
 public:
     // Constructor
-    MacButton(){}
+    MacButton(){
+        cout << "Mac button is created." << endl;
+    }
 
     // Override function
     void render() override {
@@ -50,7 +56,9 @@ public:
     }
 
     // Destructor
-    ~MacButton() {}
+    ~MacButton() {
+        cout << "Mac button is destructed." << endl;
+    }
 };
 
 // This is creator
