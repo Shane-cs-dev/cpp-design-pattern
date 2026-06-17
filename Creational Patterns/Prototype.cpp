@@ -79,7 +79,7 @@ public:
     void businessLogic() {
         vector<unique_ptr<Shape>> shapeCopy;
 
-        for (auto& item : prototype) {
+        for (const auto& item : prototype) {
             shapeCopy.emplace_back(item->clone());
         }
     }

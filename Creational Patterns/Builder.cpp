@@ -132,10 +132,17 @@ public:
     // Member function
     void makeCar(Builder& builder) {
         builder.reset();
-        builder.setEngine("Test");
+        builder.setEngine("Default Car");
+        builder.setGPS(true);
+        builder.setSeats(4);
+        builder.setTripComputer(false);
     }
     void makeManualCar(Builder& builder) {
         builder.reset();
+        builder.setEngine("Manual Car");
+        builder.setGPS(false);
+        builder.setSeats(0);
+        builder.setTripComputer(false);
     }
 
     // Destructor
@@ -145,9 +152,9 @@ public:
 int main() {
     Director director;
     // Create CarBuilder
-    CarBuilder CarBuilder;
-    director.makeCar(CarBuilder);
-    unique_ptr<Car> car = CarBuilder.getResult();
+    CarBuilder carBuilder;
+    director.makeCar(carBuilder);
+    unique_ptr<Car> car = carBuilder.getResult();
 
     return 0;
 }
