@@ -44,7 +44,7 @@ public:
     int getVolume() override {return volume;}
     void setVolume(int percent) {volume = percent;}
     int getChannel() {return channel;}
-    void setChannel(int channel) {channel = channel;}
+    void setChannel(int channel) {this->channel = channel;}
 
     // Destructor 
     ~Radio() override {
@@ -71,7 +71,7 @@ public:
     int getVolume() override {return volume;}
     void setVolume(int percent) {volume = percent;}
     int getChannel() {return channel;}
-    void setChannel(int channel) {channel = channel;}
+    void setChannel(int channel) {this->channel = channel;}
 
     // Destructor 
     ~TV() override {
@@ -79,15 +79,16 @@ public:
     }
 };
 
- /* Abstraction for  Remote control */
+ /* Abstraction for Remote control */
+// Can have a refined abstraction to better define a feature
+// like separating channel function to another advance abstraction
 class Remote {
 private:
     unique_ptr<Device> device;
 public:
     // Constructor
-    Remote() {
-        make_unique<Device>();
-        cout << "This is the constructor for Remote" << endl;
+    Remote(unique_ptr<Device> dev) : device(move(dev)) {
+        cout << "Remote created with a device" << endl;
     }
 
     // Member function
@@ -129,5 +130,16 @@ public:
     ~Remote() {
         cout << "This is the destructor for Remote" << endl;
     }
-
 };
+
+int main() {
+    Remote remote_radio(make_unique<Radio>(20, 5));
+    // Or
+    auto tv1 = make_unique<TV>(30, 10);
+    Remote remote_tv(move(tv1));
+
+    remote_radio.togglePower();
+    remote_tv.togglePower();
+
+    return 0;
+}
