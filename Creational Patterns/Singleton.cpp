@@ -4,18 +4,22 @@ using namespace std;
 
 class Database {
 private:
-    static unique_ptr<Database> instance;
     // Private constructor
     Database() {
         cout << "This is the constrcutor in private" << endl;
     }
 public:
-    static unique_ptr<Database> getInstance() {
-        if (instance == nullptr) {
-            instance = make_unique<Database>();
-        }
-        return instance.get();
+    static Database& getInstance() {
+        static Database instance;
+        return instance;
     }
+
+    Database(const Database&) = delete;
+    Database& operator=(const Database&) = delete; // Forbidden Assignment operator
 };
 
-unique_ptr<Database> Database::instance = nullptr;
+int main() {
+    auto& db1 = Database::getInstance();
+
+    return 0;
+}
