@@ -28,7 +28,7 @@ protected:
 /* Concrete Device */
 class Radio : public Device {
 private:
-    bool enable = false;
+    bool en = false;
     int volume;
     int channel;
 public:
@@ -38,13 +38,13 @@ public:
     }
 
     // Override member function
-    bool isEnable() override {return enable;}
-    void enable() override {enable = true;}
-    void disable() override {enable = false;}
+    bool isEnable() override {return en;}
+    void enable() override {en = true;}
+    void disable() override {en = false;}
     int getVolume() override {return volume;}
-    void setVolume(int percent) {volume = percent;}
-    int getChannel() {return channel;}
-    void setChannel(int channel) {this->channel = channel;}
+    void setVolume(int percent) override {volume = percent;}
+    int getChannel() override {return channel;}
+    void setChannel(int channel) override {this->channel = channel;}
 
     // Destructor 
     ~Radio() override {
@@ -55,27 +55,27 @@ public:
 /* Concrete Device */
 class TV : public Device {
 private:
-    bool enable = false;
+    bool en = false;
     int volume;
     int channel;
 public:
     // Constructor
     TV(int vol, int channel) : volume(vol), channel(channel) {
-        cout << "This is the constructor of Radio" << endl;
+        cout << "This is the constructor of TV" << endl;
     }
 
     // Override member function
-    bool isEnable() override {return enable;}
-    void enable() override {enable = true;}
-    void disable() override {enable = false;}
+    bool isEnable() override {return en;}
+    void enable() override {en = true;}
+    void disable() override {en = false;}
     int getVolume() override {return volume;}
-    void setVolume(int percent) {volume = percent;}
-    int getChannel() {return channel;}
-    void setChannel(int channel) {this->channel = channel;}
+    void setVolume(int percent) override {volume = percent;}
+    int getChannel() override {return channel;}
+    void setChannel(int channel) override {this->channel = channel;}
 
     // Destructor 
     ~TV() override {
-        cout << "This is the destructor of the Radio" << endl;
+        cout << "This is the destructor of the TV" << endl;
     }
 };
 
@@ -87,7 +87,7 @@ private:
     unique_ptr<Device> device;
 public:
     // Constructor
-    Remote(unique_ptr<Device> dev) : device(move(dev)) {
+    Remote(unique_ptr<Device> dev) : device(std::move(dev)) {
         cout << "Remote created with a device" << endl;
     }
 
@@ -136,7 +136,7 @@ int main() {
     Remote remote_radio(make_unique<Radio>(20, 5));
     // Or
     auto tv1 = make_unique<TV>(30, 10);
-    Remote remote_tv(move(tv1));
+    Remote remote_tv(std::move(tv1));
 
     remote_radio.togglePower();
     remote_tv.togglePower();
